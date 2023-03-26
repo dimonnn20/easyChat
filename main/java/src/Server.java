@@ -1,29 +1,23 @@
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.LinkedList;
 
 public class Server {
-    private static Socket clientSocket;
-    private static ServerSocket serverSocket;
-    private static BufferedReader in;
-    private static BufferedWriter out;
+
+    public static final int PORT = 8080;
+    public static LinkedList<ConnectionServer> servers = new LinkedList<>();
 
     public static void main(String[] args) throws IOException {
-        serverSocket = new ServerSocket(4004);
-        System.out.println("Сервер запузен");
-        clientSocket = serverSocket.accept();
-
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-        while (clientSocket.isBound()) {
-            String word = in.readLine();
-            System.out.println("Клиент отправил слово " + word);
-            out.write("Привет, это сервер, подтверждаю получение слова " + word + "\n");
-            out.flush();
+        ServerSocket serverSocket = new ServerSocket(PORT);
+        try {
+            while (true) {
+                Socket socket = serverSocket.accept();
+                servers.add(new ConnectionServer(socket));
+            }
+        } finally {
+            serverSocket.close();
         }
-        in.close();
-        out.close();
-        serverSocket.close();
-
     }
+
 }
