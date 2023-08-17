@@ -18,11 +18,11 @@ public class Client {
         System.out.println("Что бы Вы хотели сказать?");
         String word;
         while (!(word = consoleReader.readLine()).equals("exit")) {
-            System.out.println("Что бы Вы хотели сказать?");
             out.write(word + "\n");
             out.flush();
             String respond = in.readLine();
             System.out.println("Ответ от сервера: " + respond);
+            System.out.println("Что бы Вы хотели сказать?");
         }
 
         in.close();

@@ -10,15 +10,15 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         serverSocket = new ServerSocket(4004);
-        System.out.println("Сервер запузен");
+        System.out.println("Сервер запущен");
         clientSocket = serverSocket.accept();
 
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         while (clientSocket.isBound()) {
             String word = in.readLine();
-            System.out.println("Клиент отправил слово " + word);
-            out.write("Привет, это сервер, подтверждаю получение слова " + word + "\n");
+            System.out.println("Клиент отправил слово \"" + word+"\"");
+            out.write("Привет, это сервер, подтверждаю получение слова: \"" + word + "\" \n");
             out.flush();
         }
         in.close();
